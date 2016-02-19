@@ -110,9 +110,10 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     // If the application is in the foreground, we will notify the user of the region's state via an alert.
-    NSString *cancelButtonTitle = NSLocalizedString(@"OK", @"Title for cancel button in local notification");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:notification.alertBody message:nil delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
-    [alert show];
+//    NSString *cancelButtonTitle = NSLocalizedString(@"OK", @"Title for cancel button in local notification");
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:notification.alertBody message:nil delegate:nil cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
+//    [alert show];
+  NSLog(@"alert:%@",notification.alertBody);
 }
 
 
