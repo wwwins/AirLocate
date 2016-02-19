@@ -126,7 +126,7 @@
     {
         [allBeacons addObjectsFromArray:regionResult];
     }
-    
+
     for (NSNumber *range in @[@(CLProximityUnknown), @(CLProximityImmediate), @(CLProximityNear), @(CLProximityFar)])
     {
         NSArray *proximityBeacons = [allBeacons filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"proximity = %d", [range intValue]]];
@@ -195,9 +195,28 @@
     CLBeacon *beacon = self.beacons[sectionKey][indexPath.row];
     cell.textLabel.text = [beacon.proximityUUID UUIDString];
 
-    NSString *formatString = NSLocalizedString(@"Major: %@, Minor: %@, Acc: %.2fm", @"Format string for ranging table cells.");
-    cell.detailTextLabel.text = [NSString stringWithFormat:formatString, beacon.major, beacon.minor, beacon.accuracy];
-	
+  NSString *buf = @"None";
+  int intMinor = [beacon.minor intValue];
+  switch (intMinor) {
+    case 100:
+      buf = @"😀";
+      break;
+    case 99:
+      buf = @"😭";
+      break;
+    case 98:
+      buf = @"⚠️";
+      break;
+
+    default:
+      break;
+  }
+  if (beacon.accuracy<0) {
+    // 已被移除的 beacon device
+  }
+  NSString *formatString = NSLocalizedString(@"Major: %@, Minor: %@, Acc: %.2fm, Msg: %@", @"Format string for ranging table cells.");
+  cell.detailTextLabel.text = [NSString stringWithFormat:formatString, beacon.major, beacon.minor, beacon.accuracy, buf];
+
     return cell;
 }
 
