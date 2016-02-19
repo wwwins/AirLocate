@@ -26,6 +26,7 @@
 		9B658B0F174EA76C00271210 /* APLConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B658B0A174EA58200271210 /* APLConfigurationViewController.m */; };
 		9BE35B9A17556B7A00E4C77A /* APLRangingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE35B9917556B7A00E4C77A /* APLRangingViewController.m */; };
 		9BE35B9D17556F2D00E4C77A /* APLDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE35B9C17556F2D00E4C77A /* APLDefaults.m */; };
+		D04989AE1C756A210025DF75 /* APLTreeNodeAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04989AD1C756A210025DF75 /* APLTreeNodeAlertViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,8 @@
 		9BE35B9917556B7A00E4C77A /* APLRangingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLRangingViewController.m; sourceTree = "<group>"; };
 		9BE35B9B17556F2D00E4C77A /* APLDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLDefaults.h; sourceTree = "<group>"; };
 		9BE35B9C17556F2D00E4C77A /* APLDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLDefaults.m; sourceTree = "<group>"; };
+		D04989AC1C756A210025DF75 /* APLTreeNodeAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLTreeNodeAlertViewController.h; sourceTree = "<group>"; };
+		D04989AD1C756A210025DF75 /* APLTreeNodeAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLTreeNodeAlertViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,8 @@
 				9B20A36017553D5C009FC97A /* APLCalibrationEndViewController.m */,
 				9B658B09174EA58200271210 /* APLConfigurationViewController.h */,
 				9B658B0A174EA58200271210 /* APLConfigurationViewController.m */,
+				D04989AC1C756A210025DF75 /* APLTreeNodeAlertViewController.h */,
+				D04989AD1C756A210025DF75 /* APLTreeNodeAlertViewController.m */,
 				9BE35B9B17556F2D00E4C77A /* APLDefaults.h */,
 				9BE35B9C17556F2D00E4C77A /* APLDefaults.m */,
 				2810897A177C74F10098FCF6 /* APLProgressTableViewCell.h */,
@@ -231,6 +236,7 @@
 				9B59E5C0174E7BF20083A8A5 /* main.m in Sources */,
 				9B658B0F174EA76C00271210 /* APLConfigurationViewController.m in Sources */,
 				9B59E5C4174E7BF20083A8A5 /* APLAppDelegate.m in Sources */,
+				D04989AE1C756A210025DF75 /* APLTreeNodeAlertViewController.m in Sources */,
 				9B20A35E17502BDD009FC97A /* APLCalibrationCalculator.m in Sources */,
 				9B20A36117553D5C009FC97A /* APLCalibrationEndViewController.m in Sources */,
 				9BE35B9D17556F2D00E4C77A /* APLDefaults.m in Sources */,
