@@ -62,9 +62,11 @@ NSString *BeaconIdentifier = @"com.isobar.AirLocate";
         // uuidgen should be used to generate UUIDs.
         _supportedProximityUUIDs = @[
                                       [[NSUUID alloc] initWithUUIDString:@"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0"],
+
                                       [[NSUUID alloc] initWithUUIDString:@"B5B182C7-EAB1-4988-AA99-B5C1517008D7"],
                                       [[NSUUID alloc] initWithUUIDString:@"B5B182C7-EAB1-4988-AA99-B5C1517008D8"],
                                       [[NSUUID alloc] initWithUUIDString:@"B5B182C7-EAB1-4988-AA99-B5C1517008D9"],
+
                                       [[NSUUID alloc] initWithUUIDString:@"5A4BCFCE-174E-4BAC-A814-092E77F6B7E5"],
                                       [[NSUUID alloc] initWithUUIDString:@"74278BDA-B644-4520-8F0C-720EAF059935"],
                                       [[NSUUID alloc] initWithUUIDString:@"541BFA3D-C6BE-4035-9B59-A26B7B4989B5"]
