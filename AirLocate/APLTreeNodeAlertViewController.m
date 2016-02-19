@@ -95,11 +95,16 @@
   NSArray *proximityBeacons = [allBeacons filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"minor=9 && (proximity=%d || proximity=%d)",CLProximityImmediate,CLProximityNear]];
   if ([proximityBeacons count]) {
     // green
-    self.view.backgroundColor = [UIColor greenColor];
+    [UIView animateWithDuration:1.0 animations:^{
+      self.view.backgroundColor = [UIColor greenColor];
+    }];
   }
   else {
     // red
-    self.view.backgroundColor = [UIColor redColor];
+    [UIView animateWithDuration:1.0 animations:^{
+      self.view.backgroundColor = [UIColor redColor];
+    }];
+
   }
 }
 
