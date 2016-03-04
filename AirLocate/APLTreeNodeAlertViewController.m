@@ -13,6 +13,7 @@
 
 @property NSMutableDictionary *beacons;
 @property NSMutableDictionary *rangedRegions;
+@property NSMutableDictionary *dots;
 
 @property CLLocationManager *locationManager;
 
@@ -36,6 +37,10 @@
     CLBeaconRegion *region = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:uuid.UUIDString];
     self.rangedRegions[region] = [[NSArray alloc] init];
   }
+
+  // 圖形化
+//  [self lazyAddDot:CGPointMake(arc4random_uniform(self.view.frame.size.width-20)+10.0,arc4random_uniform(self.view.frame.size.height-200)+100.0)];
+  self.dots = [[NSMutableDictionary alloc] init];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -81,7 +86,21 @@
     [allBeacons addObjectsFromArray:regionResult];
   }
 
-  NSLog(@"allBeacon:%@",allBeacons);
+//  NSLog(@"allBeacon:%@",allBeacons);
+  // 圖形化
+  for (CLBeacon *beacon in allBeacons) {
+//    NSLog(@"beacon:%@,%f",[beacon.proximityUUID UUIDString],beacon.accuracy);
+    if ([self.dots objectForKey:[beacon.proximityUUID UUIDString]]) {
+      CALayer *dot = [self.dots objectForKey:[beacon.proximityUUID UUIDString]];
+      CGPoint p = dot.position;
+      p.y = self.view.frame.size.height - self.view.frame.size.height*(beacon.accuracy/15.0);
+      dot.position = p;
+    }
+    else {
+      CALayer *dot = [self lazyAddDot:CGPointMake(arc4random_uniform(self.view.frame.size.width-20)+10.0,arc4random_uniform(self.view.frame.size.height-200)+100.0)];
+      [self.dots setObject:dot forKey:[beacon.proximityUUID UUIDString]];
+    }
+  }
 
 /* 現階段用不到
   // 依四種距離分類
@@ -92,21 +111,42 @@
     }
   }
 */
-  NSArray *proximityBeacons = [allBeacons filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"minor=9 && (proximity=%d || proximity=%d)",CLProximityImmediate,CLProximityNear]];
+  NSArray *proximityBeacons = [allBeacons filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"major=1 && (proximity=%d || proximity=%d)",CLProximityImmediate,CLProximityNear]];
   if ([proximityBeacons count]) {
     // green
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
       self.view.backgroundColor = [UIColor greenColor];
     }];
   }
   else {
     // red
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
       self.view.backgroundColor = [UIColor redColor];
     }];
 
   }
 }
 
+- (CALayer *)addPlaneToLayer:(CALayer*)container size:(CGSize)size position:(CGPoint)point color:(UIColor*)color
+{
+  CALayer *plane = [CALayer layer];
+//  Define position,size and colors
+  plane.backgroundColor = [color CGColor];
+//  plane.opacity = 0.6;
+  plane.frame = CGRectMake(0, 0, size.width, size.height);
+  plane.position = point;
+  plane.anchorPoint = CGPointMake(0.5, 0.5);
+  plane.borderColor = [[UIColor redColor] CGColor];
+  plane.borderWidth = 1;
+  plane.cornerRadius = size.width*0.5;
+//  Add the layer to the container layer
+  [container addSublayer:plane];
+
+  return plane;
+}
+
+- (CALayer *)lazyAddDot:(CGPoint)point {
+  return [self addPlaneToLayer:self.view.layer size:CGSizeMake(16, 16) position:point color:[UIColor colorWithRed:arc4random()%256/256.0 green:arc4random()%256/256.0 blue:arc4random()%256/256.0 alpha:1.0]];
+}
 
 @end
