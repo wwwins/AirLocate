@@ -67,9 +67,11 @@ NSString *BeaconIdentifier = @"com.isobar.AirLocate";
                                       [[NSUUID alloc] initWithUUIDString:@"B5B182C7-EAB1-4988-AA99-B5C1517008D8"],
                                       [[NSUUID alloc] initWithUUIDString:@"B5B182C7-EAB1-4988-AA99-B5C1517008D9"],
 
-                                      [[NSUUID alloc] initWithUUIDString:@"5A4BCFCE-174E-4BAC-A814-092E77F6B7E5"],
+                                      [[NSUUID alloc] initWithUUIDString:@"0FDDEC8B-6A17-467E-94E1-57EAC571D270"],
+                                      [[NSUUID alloc] initWithUUIDString:@"DEFE84E3-91AA-464E-A0B8-6B87736DBE31"],
                                       [[NSUUID alloc] initWithUUIDString:@"74278BDA-B644-4520-8F0C-720EAF059935"],
-                                      [[NSUUID alloc] initWithUUIDString:@"541BFA3D-C6BE-4035-9B59-A26B7B4989B5"]
+                                      [[NSUUID alloc] initWithUUIDString:@"74278BDB-B644-4520-8F0C-720EAF059935"],
+//                                      [[NSUUID alloc] initWithUUIDString:@"541BFA3D-C6BE-4035-9B59-A26B7B4989B5"]
                                      ];
         _defaultPower = @-59;
     }
