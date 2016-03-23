@@ -33,18 +33,19 @@
   self.beacons = [[NSMutableDictionary alloc] init];
   self.rangedRegions = [[NSMutableDictionary alloc] init];
 
-  // init location manager
+  // 第一步: init location manager
+  // 手機需要開啟 location service & bluetooth
   self.locationManager = [[CLLocationManager alloc] init];
   self.locationManager.delegate = self;
 
-  // 有哪些 beacon 區域
+  // 第二步: 加入要偵測的 ibeacon uuid
   for (NSUUID *uuid in [APLDefaults sharedDefaults].supportedProximityUUIDs) {
     CLBeaconRegion *region = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:uuid.UUIDString];
     self.rangedRegions[region] = [[NSArray alloc] init];
   }
 
   // 圖形化
-  //[self lazyAddDot:CGPointMake(arc4random_uniform(self.view.frame.size.width-20)+10.0,arc4random_uniform(self.view.frame.size.height-200)+100.0)];
+  //[self lazyadddot:cgpointmake(arc4random_uniform(self.view.frame.size.width-20)+10.0,arc4random_uniform(self.view.frame.size.height-200)+100.0)];
   self.dots = [[NSMutableDictionary alloc] init];
 
 }
@@ -52,7 +53,7 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
-  // 開始監控 beacon 區域
+  // 第二步: 開始監測 beacon 區域
   NSLog(@"Start Monitoring");
   for (CLBeaconRegion *region in self.rangedRegions) {
     [self.locationManager startRangingBeaconsInRegion:region];
@@ -81,7 +82,13 @@
 
 #pragma mark - Location manager delegate
 
-
+/**
+ *  當偵測到 beacon 會觸發此函式
+ *
+ *  @param manager location manager
+ *  @param beacons beacons 陣列
+ *  @param region  近/中/遠/未知四個區域
+ */
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray<CLBeacon *> *)beacons inRegion:(CLBeaconRegion *)region {
   self.rangedRegions[region] = beacons;
   [self.beacons removeAllObjects];
@@ -92,10 +99,10 @@
     [allBeacons addObjectsFromArray:regionResult];
   }
 
-//  NSLog(@"allBeacon:%@",allBeacons);
+  //NSLog(@"allBeacon:%@",allBeacons);
   // 圖形化
   for (CLBeacon *beacon in allBeacons) {
-//    NSLog(@"beacon:%@,%f",[beacon.proximityUUID UUIDString],beacon.accuracy);
+    // NSLog(@"beacon:%@,%f",[beacon.proximityUUID UUIDString],beacon.accuracy);
     if ([self.dots objectForKey:[beacon.proximityUUID UUIDString]]) {
       CALayer *dot = [self.dots objectForKey:[beacon.proximityUUID UUIDString]];
       CGPoint p = dot.position;
@@ -136,16 +143,15 @@
 - (CALayer *)addPlaneToLayer:(CALayer*)container size:(CGSize)size position:(CGPoint)point color:(UIColor*)color
 {
   CALayer *plane = [CALayer layer];
-//  Define position,size and colors
+  // Define position,size and colors
   plane.backgroundColor = [color CGColor];
-//  plane.opacity = 0.6;
+  //plane.opacity = 0.6;
   plane.frame = CGRectMake(0, 0, size.width, size.height);
   plane.position = point;
   plane.anchorPoint = CGPointMake(0.5, 0.5);
   plane.borderColor = [[UIColor flatRedColorDark] CGColor];
   plane.borderWidth = 1;
   plane.cornerRadius = size.width*0.5;
-//  Add the layer to the container layer
   [container addSublayer:plane];
 
   return plane;
@@ -159,7 +165,7 @@
   [self.view.layer addSublayer:myLayer];
   return myLayer;
 #else
-  //  return [self addPlaneToLayer:self.view.layer size:CGSizeMake(16, 16) position:point color:[UIColor colorWithRed:arc4random()%256/256.0 green:arc4random()%256/256.0 blue:arc4random()%256/256.0 alpha:1.0]];
+  // return [self addPlaneToLayer:self.view.layer size:CGSizeMake(16, 16) position:point color:[UIColor colorWithRed:arc4random()%256/256.0 green:arc4random()%256/256.0 blue:arc4random()%256/256.0 alpha:1.0]];
   return [self addPlaneToLayer:self.view.layer size:CGSizeMake(DOT_RADIUS,DOT_RADIUS) position:point color:[UIColor randomFlatColor]];
 #endif
 
