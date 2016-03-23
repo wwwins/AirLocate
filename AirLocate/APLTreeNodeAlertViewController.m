@@ -8,6 +8,11 @@
 
 #import "APLTreeNodeAlertViewController.h"
 #import "APLDefaults.h"
+#import "ALDot.h"
+#import <ChameleonFramework/Chameleon.h>
+
+#define ENABLE_CUSTOM_DOT  YES
+#define DOT_RADIUS  20
 
 @interface APLTreeNodeAlertViewController ()
 
@@ -39,8 +44,9 @@
   }
 
   // 圖形化
-//  [self lazyAddDot:CGPointMake(arc4random_uniform(self.view.frame.size.width-20)+10.0,arc4random_uniform(self.view.frame.size.height-200)+100.0)];
+  //[self lazyAddDot:CGPointMake(arc4random_uniform(self.view.frame.size.width-20)+10.0,arc4random_uniform(self.view.frame.size.height-200)+100.0)];
   self.dots = [[NSMutableDictionary alloc] init];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -93,7 +99,7 @@
     if ([self.dots objectForKey:[beacon.proximityUUID UUIDString]]) {
       CALayer *dot = [self.dots objectForKey:[beacon.proximityUUID UUIDString]];
       CGPoint p = dot.position;
-      p.y = self.view.frame.size.height - self.view.frame.size.height*(beacon.accuracy/15.0);
+      p.y = self.view.frame.size.height - (int)self.view.frame.size.height*(beacon.accuracy/15.0) - 10;
       dot.position = p;
     }
     else {
@@ -115,13 +121,13 @@
   if ([proximityBeacons count]) {
     // green
     [UIView animateWithDuration:0.5 animations:^{
-      self.view.backgroundColor = [UIColor greenColor];
+      self.view.backgroundColor = [UIColor flatGreenColor];
     }];
   }
   else {
     // red
     [UIView animateWithDuration:0.5 animations:^{
-      self.view.backgroundColor = [UIColor redColor];
+      self.view.backgroundColor = [UIColor flatRedColor];
     }];
 
   }
@@ -136,7 +142,7 @@
   plane.frame = CGRectMake(0, 0, size.width, size.height);
   plane.position = point;
   plane.anchorPoint = CGPointMake(0.5, 0.5);
-  plane.borderColor = [[UIColor redColor] CGColor];
+  plane.borderColor = [[UIColor flatRedColorDark] CGColor];
   plane.borderWidth = 1;
   plane.cornerRadius = size.width*0.5;
 //  Add the layer to the container layer
@@ -146,7 +152,17 @@
 }
 
 - (CALayer *)lazyAddDot:(CGPoint)point {
-  return [self addPlaneToLayer:self.view.layer size:CGSizeMake(16, 16) position:point color:[UIColor colorWithRed:arc4random()%256/256.0 green:arc4random()%256/256.0 blue:arc4random()%256/256.0 alpha:1.0]];
+
+#if ENABLE_CUSTOM_DOT
+  ALDot *myLayer = [ALDot layer];
+  myLayer.position = point;
+  [self.view.layer addSublayer:myLayer];
+  return myLayer;
+#else
+  //  return [self addPlaneToLayer:self.view.layer size:CGSizeMake(16, 16) position:point color:[UIColor colorWithRed:arc4random()%256/256.0 green:arc4random()%256/256.0 blue:arc4random()%256/256.0 alpha:1.0]];
+  return [self addPlaneToLayer:self.view.layer size:CGSizeMake(DOT_RADIUS,DOT_RADIUS) position:point color:[UIColor randomFlatColor]];
+#endif
+
 }
 
 @end
